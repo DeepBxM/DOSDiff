@@ -1,0 +1,90 @@
+defaults:
+
+  - model: mlm
+
+seed: ${trial_id}
+trial_id: 0
+project_name: guided_protein_seq
+
+#data_dir: /scratch/nvg7279/datasets/igfold_labeled_cleaned ?
+
+#
+#data_dir: /media/wagnchogn/data/lishuxin/diffu/NOS-main/dataset_yeast
+#
+#data_dir: /media/wagnchogn/data/lishuxin/diffu/NOS-main/data_yeastnat3143_diffu
+#
+#data_dir: /media/wagnchogn/data/lishuxin/diffu/NOS-main/data_yeast100000_greater16
+
+#middle
+data_dir: /media/wagnchogn/data/lishuxin/regressor/yeast_evolution_cnn/data_2411/middle_75_50_10_13_100000
+
+###
+#/scratch/nvg7279/datasets/sabdab_and_poas
+#
+train_fn: train_data.csv #train.csv
+val_fn: val_data.csv
+#train_fn: train_*.csv #train.csv
+#val_fn: val_iid.csv
+
+###100000
+max_samples: 10000
+
+#target_cols: ['ss_perc_sheet'] #['sasa']
+target_cols: null
+#['sasa']
+
+#discr_batch_ratio: 2
+discr_batch_ratio: null
+###change
+#model.network.target_channle: 1
+
+vocab_file: /media/wagnchogn/data/lishuxin/diffu/NOS-main/vocabDNA _yeast8.txt
+#vocab_file: /media/wagnchogn/data/lishuxin/diffu/NOS-main/vocab.txt
+
+vocab_size: 10
+#vocab_size: 30
+### yuanlai  true
+use_alignment_tokens: False
+#
+#log_dir: /scratch/nvg7279/logs/guided_protein_seq ?
+
+log_dir: /media/wagnchogn/data/lishuxin/diffu/NOS-main/configs_yeast_middle_75_50_10_13_100000/test1
+
+exp_name: ar_mlm_test
+exp_dir: ${log_dir}/${exp_name}
+
+val_sample_frequency: 4
+num_samples: 256
+infill_seeds_fn: null #/home/nvg7279/src/seq-struct/infill_test_seeds.txt
+guidance_kwargs: null
+autoregressive_sample: False
+
+resume_ckpt: null
+#/scratch/nvg7279/logs/guided_protein_seq/var_length_test/models/best_by_valid/epoch=1-step=134.ckpt 
+#/scratch/nvg7279/logs/guided_protein_seq/test/models/best_by_valid/epoch=9-step=790.ckpt
+
+max_seq_len: 80
+min_seq_len: 80
+#max_seq_len: 300
+#min_seq_len: 128
+trim_strategy: "randomcrop"
+gradient_clip: 10.0
+min_epochs: 100
+max_epochs: 100
+early_stop_patience: 0
+###change
+#batch_size: 128
+#64 is right number
+#batch_size: 128
+batch_size: 128
+#loader_workers: 4
+loader_workers: 8
+
+
+ngpu: 1
+
+hydra:
+  run:
+    dir: ${log_dir}
+  sweep:
+    dir: ${log_dir}
