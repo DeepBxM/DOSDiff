@@ -43,10 +43,10 @@ class MLMDiffusionTransformer(nn.Module):
         super().__init__()
 ###
         config = AutoConfig.from_pretrained('/your_folder/diffu/bert_base_uncased')
-        # config = AutoConfig.from_pretrained(bert_config_name)
+        
         config.hidden_dropout_prob = dropout
         config.vocab_size = vocab_size
-        # config.hidden_size = 512
+       
 
         self.target_channels = target_channels
         self.dropout = dropout
@@ -56,7 +56,7 @@ class MLMDiffusionTransformer(nn.Module):
         self.encoder = BertEncoder(config)
         self.cls = BertOnlyMLMHead(config)
 
-        # self.cls.predictions.decoder.weight = self.embeddings.word_embeddings.weight
+       
 
         self.time_embed_dim = config.hidden_size
         self.time_embed = nn.Sequential(
@@ -85,14 +85,7 @@ class MLMDiffusionTransformer(nn.Module):
             token_embed = self.embeddings(input_ids=corrupted_ids)
 
 
-
-
-        # a_for_token_embed = token_embed
-        # b_for_time_embed_dim = self.time_embed_dim
-        # c_for_func_timestep_embedding = timestep_embedding(timesteps, self.time_embed_dim)
-
         time_embed = self.time_embed(timestep_embedding(timesteps, self.time_embed_dim))
-
 
 
         time_embed = time_embed.unsqueeze(1).expand(-1, token_embed.size(1), -1)
@@ -187,10 +180,6 @@ class MLMDiffusion(BaseModel):
             attn_mask,
         )
 
-        # print(f"t is{t}")
-        # print(f"corrupt_ids is{corrupt_ids}")
-        # print(f"corrupt_mask is{corrupt_mask}")
-        # print(f"model_output is{model_output}")
 
         logits = model_output['logits']
         hiddens = model_output['sequence_output']
@@ -290,24 +279,7 @@ class MLMDiffusion(BaseModel):
                 loss.backward()
                 optimizer.step()
                 
-                # delta_grad_norm = delta.grad.norm(dim=(2), keepdim=True)
-                # delta.grad /= delta_grad_norm.clamp_min(1e-7)
-                # if i < 100:
-                #     print(target_loss)
-                #     print(sample_loss)
-                #     print(delta.pow(2).mean())
-                #     print("")
-
-                # eps = torch.randn_like(feature_grad) / grad_norm.clamp_min(1e-7)
-                # new_features.add_(
-                #     eps, alpha=math.sqrt(2 * guidance_step_size * langevin_noise_scale)
-                # )
-                
-                # print(target_loss.item(), kl.item())
-
-                # store best seqs?
-            
-            # print("\n")
+ 
 
         logits = self.network.cls(h + delta.data)
         return logits
@@ -425,10 +397,7 @@ class MLMDiffusion(BaseModel):
         x = torch.where(infill_mask, x, noisy_gt)
         attn_mask = torch.ones_like(infill_mask, dtype=torch.bool)
 
-        # tokenizer = transformers.BertTokenizerFast(
-        #     vocab_file="/home/nvg7279/src/seq-struct/vocab.txt", 
-        #     do_lower_case=False,
-        # )
+
 
         return_best = guidance_kwargs.pop("return_best", False) \
             if guidance_kwargs is not None else False
