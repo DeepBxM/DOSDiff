@@ -1,0 +1,62 @@
+defaults:
+  - model: mlm
+
+seed: ${trial_id}
+trial_id: 0
+project_name: guided_protein_seq
+
+
+data_dir: /your_folder/your_data
+
+
+val_fn: val_data.csv
+
+
+
+
+
+target_cols: null
+
+vocab_file: /your_folder/your_vocab
+
+
+
+
+###
+log_dir: /your_folder/your_logs
+
+exp_name: test_sample
+exp_dir: ${log_dir}/${exp_name}
+
+
+
+#
+ckpt_path: "/your_folder/your_ckpt.ckpt"
+
+
+max_epochs: 100 
+
+max_seq_len: 80
+min_seq_len: 80
+trim_strategy: "randomcrop"
+vocab_size: 10
+
+ngpu: 1
+
+num_samples: 256
+infill_seeds_fn: null
+
+
+model.network.target_channels: null
+
+seeds_fn: /yourfolder/your_data_gra
+
+results_dir:/yourfolder/your_results
+
+
+hydra:
+  run:
+    dir: ${log_dir}
+  sweep:
+    dir: ${log_dir}
+
