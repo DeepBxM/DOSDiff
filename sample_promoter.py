@@ -44,43 +44,13 @@ def main(config):
     elif 'gaussian' in config.model['_target_']:
         model_tag += 'gaussian'
 
-##
-    numbering_schemes = ["chothia", "aho"]
-    cdr_combos = [
-        ["hcdr1"],
-        ["hcdr2"],
-        ["hcdr3"],
-        ["hcdr1", "hcdr2", "hcdr3"],
-        ["lcdr1"],
-        ["lcdr2"],
-        ["lcdr3"],
-    ]
 
-
-###
-    # sampling_kwargs_list = [
-    #     {"fixed_length": True},
-    #     {"fixed_length": False},
-    # ]
 ###
     sampling_kwargs_list = [
 
         {"fixed_length": True},
     ]
 
-
-###
-    #
-    # sample_outer_loop(
-    #     model,
-    #     model_tag,
-    #     config.results_dir,
-    #     config.seeds_fn,
-    #     config.vocab_file,
-    #     numbering_schemes,
-    #     cdr_combos,
-    #     sampling_kwargs_list,
-    # )
 
 ###
 
