@@ -4,7 +4,7 @@ defaults:
 
 seed: ${trial_id}
 trial_id: 0
-project_name: guided_protein_seq
+project_name: guided_seq
 
 
 
@@ -43,8 +43,7 @@ exp_dir: ${log_dir}/${exp_name}
 val_sample_frequency: 4
 num_samples: 256
 infill_seeds_fn: null 
-guidance_kwargs: null
-autoregressive_sample: False
+
 
 resume_ckpt: null
 
