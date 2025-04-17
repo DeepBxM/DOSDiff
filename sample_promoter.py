@@ -5,7 +5,7 @@ import time
 from seq_models.sample import sample_outer_loop
 from seq_models.sample import dna_sample_outer_loop
 
-@hydra.main(config_path="../../configs", config_name="sample")
+@hydra.main(config_path="../../configs", config_name="sample_promoter")
 
 
 def main(config):
